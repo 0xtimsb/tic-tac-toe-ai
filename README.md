@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,3 +67,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+=======
+# Tic-Tac-Toe-AI-React
+This repository contains TIC-TAC-TOE game with unbeatable AI built using React.
+>>>>>>> a83fb92bdfb5ff942984207b337f1af4c2ba74ea

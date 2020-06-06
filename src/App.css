@@ -1,0 +1,25 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.Board {
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 450px;
+  height: 450px;
+  box-shadow: 0px 15px 65px 25px rgba(0, 0, 0, 0.12);
+
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.BaseTile {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 15px 5px rgba(0, 0, 0, 0.1);
+}

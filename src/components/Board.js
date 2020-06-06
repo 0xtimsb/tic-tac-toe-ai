@@ -1,5 +1,5 @@
 import React from 'react';
-import Tile from './Tile';
+import ActiveTile from './ActiveTile';
 import BaseTile from './BaseTile';
 
 class Board extends React.Component {
@@ -26,7 +26,20 @@ class Board extends React.Component {
   render() {
     return(
       <div className="Board">
-        {this.state.baseTiles}
+        <div className="Board__Grid">
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+          <ActiveTile />
+        </div>
+        <div className="Board__Grid">
+          {this.state.baseTiles}
+        </div>    
       </div>
     );
   }

@@ -1,11 +1,11 @@
-import React from 'react';
-import './App.css';
-import Board from './components/Board';
+import React from "react";
+import "./App.css";
+import TicTacToe from "./components/TicTacToe";
 
 function App() {
   return (
     <div className="App">
-      <Board />
+      <TicTacToe />
     </div>
   );
 }

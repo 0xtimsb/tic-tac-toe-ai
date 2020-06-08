@@ -1,5 +1,5 @@
 import React from "react";
-import ".Tile.css";
+import "./Tile.css";
 
 export default class Tile extends React.Component {
   constructor(props) {
@@ -7,6 +7,7 @@ export default class Tile extends React.Component {
     this.state = {};
   }
   render() {
-    return <div className="tile"></div>;
+    const type = this.props.type;
+    return <div className={`tile ${type}`}></div>;
   }
 }

@@ -1,0 +1,28 @@
+.tictactoe {
+  background-color: #ecf0f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.board {
+  background-color: #ecf0f3;
+  width: 450px;
+  height: 450px;
+  box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;
+  border-radius: 12px;
+}
+
+.grid {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  grid-gap: 12px;
+  padding: 12px;
+}

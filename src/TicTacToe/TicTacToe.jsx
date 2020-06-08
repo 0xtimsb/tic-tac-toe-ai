@@ -1,6 +1,8 @@
 import React from "react";
 import Tile from "./components/Tile";
 
+import "./TicTacToe.css";
+
 export default class TicTacToe extends React.Component {
   constructor(props) {
     super(props);
@@ -15,8 +17,8 @@ export default class TicTacToe extends React.Component {
       const matrixRow = [];
       for (let j = 0; j < 3; j++) {
         matrixRow.push({
-          isEnabled,
-          symbol,
+          isEnabled: false,
+          symbol: null,
           pos: [i, j],
         });
       }
@@ -28,26 +30,28 @@ export default class TicTacToe extends React.Component {
   render() {
     const { matrix } = this.state;
     return (
-      <div>
+      <div className="tictactoe">
         <div className="board">
-          {matrix.map((row, rowIdx) => {
-            row.map((tile, tileIdx) => (
-              <Tile
-                key={tileIdx}
-                type="active"
-                pos={tile.pos}
-                isEnabled={tile.isEnabled}
-                symbol={tile.symbol}
-              ></Tile>
-            ));
-          })}
-        </div>
-        <div className="board">
-          {matrix.map((row, rowIdx) => {
-            row.map((tile, tileIdx) => (
-              <Tile key={tileIdx} type="base" pos={tile.pos}></Tile>
-            ));
-          })}
+          <div className="grid">
+            {matrix.map((row, rowIdx) =>
+              row.map((tile, tileIdx) => (
+                <Tile
+                  key={tileIdx}
+                  type="active"
+                  pos={tile.pos}
+                  isEnabled={tile.isEnabled}
+                  symbol={tile.symbol}
+                ></Tile>
+              ))
+            )}
+          </div>
+          <div className="grid">
+            {matrix.map((row, rowIdx) =>
+              row.map((tile, tileIdx) => (
+                <Tile key={tileIdx} type="base" pos={tile.pos}></Tile>
+              ))
+            )}
+          </div>
         </div>
       </div>
     );

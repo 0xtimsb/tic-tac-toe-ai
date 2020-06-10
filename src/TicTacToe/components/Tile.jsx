@@ -1,16 +1,9 @@
 import React from "react";
-import styled, { css, keyframes } from "styled-components";
-import color from "../color";
+import styled, { css } from "styled-components";
+import color, { popUpTile } from "../styled";
 
 import cross from "../media/cross.png";
 import circle from "../media/circle.png";
-
-const popUpAnimation = keyframes`
-  to {
-    width: 100%;
-    height: 100%;
-  }
-`;
 
 const TileStyled = styled.div`
   background-color: ${color.background};
@@ -20,10 +13,10 @@ const TileStyled = styled.div`
   z-index: 1;
   align-self: center;
   justify-self: center;
-  box-shadow: 2px 2px 4px ${color.shadow}, -2px -2px 4px ${color.light};
+  box-shadow: 1px 1px 5px 2px ${color.shadow};
   width: 0%;
   height: 0%;
-  animation: ${popUpAnimation} 150ms forwards;
+  animation: ${popUpTile} 150ms forwards;
   display: flex;
   align-items: center;
   justify-content: center;

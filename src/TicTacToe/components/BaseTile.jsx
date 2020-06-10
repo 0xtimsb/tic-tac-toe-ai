@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import color from "../color";
+import color from "../styled";
 
 const BaseTileStyled = styled.div`
-  background-color: ${color.background};
+  background-color: ${color.base};
   border-radius: 10px;
-  box-shadow: inset 1px 1px 2px ${color.shadow},
-    inset -1px -1px 2px ${color.light};
+  box-shadow: inset 0px 0px 15px 1px ${color.shadow};
   cursor: pointer;
 `;
 

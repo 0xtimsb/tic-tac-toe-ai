@@ -1,19 +1,12 @@
 import React from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import color, { giveStrikeTrasform } from "./color";
+import color, { giveStrikeTrasform, popUpStroke } from "./styled";
 import bestMove, { checkWinner } from "./algorithm";
 
 import Tile from "./components/Tile";
 import BaseTile from "./components/BaseTile";
-
-const popUpAnimation = keyframes`
-  to {
-    width: 500px;
-    height: 10px;
-  }
-`;
 
 const Game = styled.div`
   background-color: ${color.background};
@@ -32,7 +25,7 @@ const Turn = styled.div`
 `;
 
 const Strike = styled.div`
-  animation: ${popUpAnimation} 1s forwards;
+  animation: ${popUpStroke} 1s forwards;
   z-index: 3;
   height: 0px;
   width: 0px;
@@ -62,7 +55,6 @@ const Strike = styled.div`
         `
       : css`
           transform: rotate(-45deg);
-          width: 650px;
         `}
 
   ${(props) =>
@@ -81,7 +73,7 @@ const Board = styled.div`
   background-color: ${color.background};
   width: 460px;
   height: 460px;
-  box-shadow: 10px 10px 10px ${color.shadow}, -10px -10px 10px ${color.light};
+  box-shadow: 0px 0px 50px 5px ${color.shadow};
   border-radius: 10px;
 `;
 
@@ -200,7 +192,9 @@ export default class TicTacToe extends React.Component {
               rows.map((tile, i) => (
                 <BaseTile
                   key={tile.key}
-                  addTile={() => this.addTile({ j, i })}
+                  addTile={() =>
+                    this.state.turn === "USER" ? this.addTile({ j, i }) : null
+                  }
                 ></BaseTile>
               ))
             )}

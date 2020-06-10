@@ -1,8 +1,24 @@
+import { keyframes } from "styled-components";
+
 const color = {
-  background: "#ecf0f3",
-  light: "#f9f9f9",
+  background: "#ffffff",
+  base: "#fbfbfb",
   shadow: "#d1d9e6",
 };
+
+export const popUpStroke = keyframes`
+  to {
+    width: 500px;
+    height: 10px;
+  }
+`;
+
+export const popUpTile = keyframes`
+  to {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export function giveStrikeTrasform(matrix) {
   // -y
@@ -55,6 +71,8 @@ export function giveStrikeTrasform(matrix) {
   ) {
     return { x: 0, y: 0, r: -45 };
   }
+
+  return { x: 0, y: 0, r: 0 };
 }
 
 export default color;

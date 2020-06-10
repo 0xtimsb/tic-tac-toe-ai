@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import color from "./color";
-import bestMove from "./algorithm";
+import bestMove, { checkWinner } from "./algorithm";
 
 import Tile from "./components/Tile";
 import BaseTile from "./components/BaseTile";
@@ -51,6 +51,7 @@ export default class TicTacToe extends React.Component {
     this.state = {
       matrix: [],
       turn: "USER",
+      status: "",
     };
   }
 
@@ -86,23 +87,48 @@ export default class TicTacToe extends React.Component {
         };
       },
       () => {
-        if (this.state.turn === "AI") {
-          const move = bestMove(JSON.parse(JSON.stringify(this.state.matrix)));
-          this.addTileAI(move, 300);
+        if (this.checkStatus(this.state.matrix)) {
+          if (this.state.turn === "AI") {
+            const move = bestMove(
+              JSON.parse(JSON.stringify(this.state.matrix))
+            );
+            this.addTileAI(move, 300);
+          }
         }
       }
     );
   };
 
   addTileAI = (move, time) => {
-    console.log(move);
     setTimeout(() => this.addTile(move), time);
+  };
+
+  checkStatus = (matrix) => {
+    let status = checkWinner(matrix);
+    if (status === null) {
+      return true;
+    } else {
+      if (status === "TIE") {
+        status = "IT'S A TIE";
+      } else if (status === "AI") {
+        status = "AI WON!";
+      } else {
+        status = "YOU WON!";
+      }
+      this.setState({ status }, () => {
+        return false;
+      });
+    }
   };
 
   render() {
     return (
       <Game>
-        <Turn>{`${this.state.turn === "USER" ? "X" : "O"} TURN`}</Turn>
+        <Turn>{`${
+          this.state.status === ""
+            ? `${this.state.turn === "USER" ? "YOUR" : "AI"} TURN`
+            : this.state.status
+        }`}</Turn>
         <Board>
           <Grid>
             {this.state.matrix.map((rows) =>

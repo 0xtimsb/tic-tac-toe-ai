@@ -54,7 +54,7 @@ function minimax(matrix, depth, isMaximizing) {
   }
 }
 
-function checkWinner(matrix) {
+export function checkWinner(matrix) {
   // Checking columns
   for (let i = 0; i < 3; i++) {
     if (

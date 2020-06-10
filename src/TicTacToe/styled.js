@@ -2,7 +2,7 @@ import { keyframes } from "styled-components";
 
 const color = {
   background: "#ffffff",
-  base: "#fbfbfb",
+  base: "#f7f7f7",
   shadow: "#d1d9e6",
 };
 
@@ -26,7 +26,7 @@ export function giveStrikeTrasform(matrix) {
     matrix[0][0].player === matrix[0][1].player &&
     matrix[0][1].player === matrix[0][2].player
   ) {
-    return { x: 0, y: -1, r: 0 };
+    return "up";
   }
   // y = 0, default
   // +y
@@ -34,45 +34,45 @@ export function giveStrikeTrasform(matrix) {
     matrix[2][0].player === matrix[2][1].player &&
     matrix[2][1].player === matrix[2][2].player
   ) {
-    return { x: 0, y: +1, r: 0 };
+    return "down";
   }
   // -x
   if (
     matrix[0][0].player === matrix[1][0].player &&
     matrix[1][0].player === matrix[2][0].player
   ) {
-    return { x: -1, y: 0, r: 90 };
+    return "left";
   }
   // x = 0
   if (
     matrix[0][1].player === matrix[1][1].player &&
     matrix[1][1].player === matrix[2][1].player
   ) {
-    return { x: 0, y: 0, r: 90 };
+    return "middle";
   }
   // +x
   if (
     matrix[0][2].player === matrix[1][2].player &&
     matrix[1][2].player === matrix[2][2].player
   ) {
-    return { x: +1, y: 0, r: 90 };
+    return "right";
   }
   // +d
   if (
     matrix[0][0].player === matrix[1][1].player &&
     matrix[1][1].player === matrix[2][2].player
   ) {
-    return { x: 0, y: 0, r: 45 };
+    return "clock";
   }
   // -d
   if (
     matrix[0][2].player === matrix[1][1].player &&
     matrix[1][1].player === matrix[2][0].player
   ) {
-    return { x: 0, y: 0, r: -45 };
+    return "anticlock";
   }
 
-  return { x: 0, y: 0, r: 0 };
+  return null;
 }
 
 export default color;

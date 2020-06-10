@@ -34,39 +34,40 @@ const Strike = styled.div`
   border-radius: 5px;
   box-shadow: 0px 0px 4px 4px ${color.shadow};
 
-  ${(props) =>
-    props.transform.x === +1
-      ? css`
-          transform: translateX(150px);
-          transform: rotate(90deg);
-        `
-      : props.transform.x === -1
-      ? css`
-          transform: translateX(-150px);
-          transform: rotate(90deg);
-        `
-      : props.transform.r === +90
-      ? css`
-          transform: rotate(90deg);
-        `
-      : props.transform.r === 45
-      ? css`
-          transform: rotate(45deg);
-        `
-      : css`
-          transform: rotate(-45deg);
-        `}
-
-  ${(props) =>
-    props.transform.y === +1
-      ? css`
-          transform: translateY(150px);
-        `
-      : props.transform.y === -1
-      ? css`
+  ${(props) => {
+    switch (props.transform) {
+      case "up":
+        return css`
           transform: translateY(-150px);
-        `
-      : css``}
+        `;
+      case "down":
+        return css`
+          transform: translateY(150px);
+        `;
+      case "right":
+        return css`
+          transform: translateX(150px) rotate(90deg);
+        `;
+      case "left":
+        return css`
+          transform: translateX(-150px) rotate(90deg);
+        `;
+      case "middle":
+        return css`
+          transform: rotate(90deg);
+        `;
+      case "clock":
+        return css`
+          transform: rotate(45deg);
+        `;
+      case "anticlock":
+        return css`
+          transform: rotate(-45deg);
+        `;
+      default:
+        return css``;
+    }
+  }}
 `;
 
 const Board = styled.div`
@@ -172,9 +173,11 @@ export default class TicTacToe extends React.Component {
             ? `${this.state.turn === "USER" ? "YOUR" : "AI"} TURN`
             : this.state.status
         }`}</Turn>
-        {this.state.status !== "" ? (
+        {this.state.status !== "" && this.state.status !== "IT'S A TIE" ? (
           <Strike transform={giveStrikeTrasform(this.state.matrix)}></Strike>
-        ) : null}
+        ) : (
+          <span></span>
+        )}
         <Board>
           <Grid>
             {this.state.matrix.map((rows) =>

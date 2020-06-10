@@ -1,12 +1,19 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-import color from "./color";
+import color, { giveStrikeTrasform } from "./color";
 import bestMove, { checkWinner } from "./algorithm";
 
 import Tile from "./components/Tile";
 import BaseTile from "./components/BaseTile";
+
+const popUpAnimation = keyframes`
+  to {
+    width: 500px;
+    height: 10px;
+  }
+`;
 
 const Game = styled.div`
   background-color: ${color.background};
@@ -22,6 +29,52 @@ const Turn = styled.div`
   font-size: 30px;
   font-weight: 600;
   color: #000000;
+`;
+
+const Strike = styled.div`
+  animation: ${popUpAnimation} 1s forwards;
+  z-index: 3;
+  height: 0px;
+  width: 0px;
+  background: white;
+  position: absolute;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 4px ${color.shadow};
+
+  ${(props) =>
+    props.transform.x === +1
+      ? css`
+          transform: translateX(150px);
+          transform: rotate(90deg);
+        `
+      : props.transform.x === -1
+      ? css`
+          transform: translateX(-150px);
+          transform: rotate(90deg);
+        `
+      : props.transform.r === +90
+      ? css`
+          transform: rotate(90deg);
+        `
+      : props.transform.r === 45
+      ? css`
+          transform: rotate(45deg);
+        `
+      : css`
+          transform: rotate(-45deg);
+          width: 650px;
+        `}
+
+  ${(props) =>
+    props.transform.y === +1
+      ? css`
+          transform: translateY(150px);
+        `
+      : props.transform.y === -1
+      ? css`
+          transform: translateY(-150px);
+        `
+      : css``}
 `;
 
 const Board = styled.div`
@@ -110,10 +163,8 @@ export default class TicTacToe extends React.Component {
     } else {
       if (status === "TIE") {
         status = "IT'S A TIE";
-      } else if (status === "AI") {
-        status = "AI WON!";
       } else {
-        status = "YOU WON!";
+        status = status === "AI" ? "AI WON!" : "YOU WON!";
       }
       this.setState({ status }, () => {
         return false;
@@ -129,6 +180,9 @@ export default class TicTacToe extends React.Component {
             ? `${this.state.turn === "USER" ? "YOUR" : "AI"} TURN`
             : this.state.status
         }`}</Turn>
+        {this.state.status !== "" ? (
+          <Strike transform={giveStrikeTrasform(this.state.matrix)}></Strike>
+        ) : null}
         <Board>
           <Grid>
             {this.state.matrix.map((rows) =>

@@ -5,7 +5,7 @@ export default function bestMove(matrix) {
     for (let i = 0; i < 3; i++) {
       if (matrix[j][i].player === "") {
         matrix[j][i].player = "AI";
-        let score = minimax(matrix, 0, false);
+        let score = minimax(matrix, 0, false, -Infinity, Infinity);
         matrix[j][i].player = "";
         if (score > bestScore) {
           bestScore = score;
@@ -17,7 +17,7 @@ export default function bestMove(matrix) {
   return move;
 }
 
-function minimax(matrix, depth, isMaximizing) {
+function minimax(matrix, depth, isMaximizing, alpha, beta) {
   let result = checkWinner(matrix);
   if (result !== null) {
     if (result === "AI") return 10;
@@ -31,9 +31,13 @@ function minimax(matrix, depth, isMaximizing) {
       for (let i = 0; i < 3; i++) {
         if (matrix[j][i].player === "") {
           matrix[j][i].player = "AI";
-          let score = minimax(matrix, depth + 1, false);
+          let score = minimax(matrix, depth + 1, false, alpha, beta);
           matrix[j][i].player = "";
           bestScore = Math.max(score, bestScore);
+          alpha = Math.max(alpha, bestScore);
+          if (beta <= alpha) {
+            break;
+          }
         }
       }
     }
@@ -44,9 +48,13 @@ function minimax(matrix, depth, isMaximizing) {
       for (let i = 0; i < 3; i++) {
         if (matrix[j][i].player === "") {
           matrix[j][i].player = "USER";
-          let score = minimax(matrix, depth + 1, true);
+          let score = minimax(matrix, depth + 1, true, alpha, beta);
           matrix[j][i].player = "";
           bestScore = Math.min(score, bestScore);
+          beta = Math.max(beta, bestScore);
+          if (beta <= alpha) {
+            break;
+          }
         }
       }
     }
@@ -106,3 +114,4 @@ export function checkWinner(matrix) {
     return null;
   }
 }
+

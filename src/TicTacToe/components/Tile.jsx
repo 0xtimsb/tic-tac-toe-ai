@@ -16,7 +16,7 @@ const TileStyled = styled.div`
   background-color: ${color.background};
   border-radius: 10px;
   border: 1px solid
-    ${(props) => (props.symbol === 0 ? css`#ccffff` : css`#ffccff`)};
+    ${(props) => (props.player === "USER" ? css`#99ccff` : css`#ffaaff`)};
   z-index: 1;
   align-self: center;
   justify-self: center;
@@ -41,10 +41,9 @@ export default class Tile extends React.Component {
   }
 
   render() {
-    const symbol = this.props.symbol === 0 ? cross : circle;
     return (
-      <TileStyled symbol={this.props.symbol}>
-        <Icon src={symbol}></Icon>
+      <TileStyled player={this.props.player}>
+        <Icon src={this.props.player === "USER" ? cross : circle}></Icon>
       </TileStyled>
     );
   }

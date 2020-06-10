@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
+
 import color from "./color";
+import minMax, { giveCopy } from "./algorithm";
 
 import Tile from "./components/Tile";
 import BaseTile from "./components/BaseTile";
@@ -18,7 +21,7 @@ const Turn = styled.div`
   transform: translateY(290px);
   font-size: 30px;
   font-weight: 600;
-  color: ${color.shadow};
+  color: #000000;
 `;
 
 const Board = styled.div`
@@ -46,32 +49,43 @@ export default class TicTacToe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tiles: [],
+      matrix: [],
       turn: 0,
     };
   }
 
   componentDidMount() {
     this.setState(() => {
-      const tiles = [];
-      for (let i = 0; i < 9; i++) {
-        tiles.push({ isActive: false, symbol: null });
+      const matrix = [];
+      for (let i = 0; i < 3; i++) {
+        matrix.push([]);
+        for (let j = 0; j < 3; j++) {
+          matrix[i].push({ key: uuidv4(), isActive: false, symbol: null });
+        }
       }
-      return { tiles };
+      return { matrix };
     });
   }
 
-  addTile = (key) => {
-    this.setState((prev, props) => {
-      const newTiles = [...prev.tiles];
-      newTiles[key].isActive = true;
-      if (prev.turn === 0) {
-        newTiles[key].symbol = 0;
-      } else {
-        newTiles[key].symbol = 1;
+  addTile = (i, j) => {
+    this.setState(
+      (prev, props) => {
+        // To get deep copy! Instead of shallow.
+        const newMatrix = JSON.parse(JSON.stringify(prev.matrix));
+        newMatrix[j][i].isActive = true;
+        if (prev.turn === 0) {
+          newMatrix[j][i].symbol = 0;
+        } else {
+          newMatrix[j][i].symbol = 1;
+        }
+        return { matrix: newMatrix, turn: prev.turn ? 0 : 1 };
+      },
+      () => {
+        if (this.state.turn === 1) {
+          //console.log(minMax(this.state.matrix, Infinity, 0));
+        }
       }
-      return { tiles: newTiles, turn: prev.turn ? 0 : 1 };
-    });
+    );
   };
 
   render() {
@@ -80,18 +94,25 @@ export default class TicTacToe extends React.Component {
         <Turn>{`${this.state.turn === 0 ? "X" : "O"} TURN`}</Turn>
         <Board>
           <Grid>
-            {this.state.tiles.map((tile, idx) => {
-              if (tile.isActive) {
-                return <Tile key={idx} symbol={tile.symbol}></Tile>;
-              } else {
-                return <div key={idx}></div>;
-              }
-            })}
+            {this.state.matrix.map((rows, j) =>
+              rows.map((tile, i) => {
+                if (tile.isActive) {
+                  return <Tile key={tile.key} symbol={tile.symbol}></Tile>;
+                } else {
+                  return <div key={tile.key}></div>;
+                }
+              })
+            )}
           </Grid>
           <Grid>
-            {this.state.tiles.map((tile, idx) => (
-              <BaseTile key={idx} addTile={() => this.addTile(idx)}></BaseTile>
-            ))}
+            {this.state.matrix.map((rows, j) =>
+              rows.map((tile, i) => (
+                <BaseTile
+                  key={tile.key}
+                  addTile={() => this.addTile(i, j)}
+                ></BaseTile>
+              ))
+            )}
           </Grid>
         </Board>
       </Game>

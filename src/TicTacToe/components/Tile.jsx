@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import color from "../color";
 
 import cross from "../media/cross.png";
@@ -15,6 +15,8 @@ const popUpAnimation = keyframes`
 const TileStyled = styled.div`
   background-color: ${color.background};
   border-radius: 10px;
+  border: 1px solid
+    ${(props) => (props.symbol === 0 ? css`#ccffff` : css`#ffccff`)};
   z-index: 1;
   align-self: center;
   justify-self: center;
@@ -41,7 +43,7 @@ export default class Tile extends React.Component {
   render() {
     const symbol = this.props.symbol === 0 ? cross : circle;
     return (
-      <TileStyled>
+      <TileStyled symbol={this.props.symbol}>
         <Icon src={symbol}></Icon>
       </TileStyled>
     );

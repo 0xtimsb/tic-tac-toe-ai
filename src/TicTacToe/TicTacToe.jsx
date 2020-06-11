@@ -102,24 +102,16 @@ export default class TicTacToe extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(
-      () => {
-        const matrix = [];
-        for (let j = 0; j < 3; j++) {
-          matrix.push([]);
-          for (let i = 0; i < 3; i++) {
-            matrix[j].push({ key: uuidv4(), player: "" });
-          }
-        }
-        return { matrix };
-      },
-      () => {
-        if (this.state.turn === "AI") {
-          const move = bestMove(JSON.parse(JSON.stringify(this.state.matrix)));
-          this.addTileAI(move, 300);
+    this.setState(() => {
+      const matrix = [];
+      for (let j = 0; j < 3; j++) {
+        matrix.push([]);
+        for (let i = 0; i < 3; i++) {
+          matrix[j].push({ key: uuidv4(), player: "" });
         }
       }
-    );
+      return { matrix };
+    });
   }
 
   addTile = (currentMove) => {
@@ -133,13 +125,9 @@ export default class TicTacToe extends React.Component {
         };
       },
       () => {
-        if (this.checkStatus(this.state.matrix)) {
-          if (this.state.turn === "AI") {
-            const move = bestMove(
-              JSON.parse(JSON.stringify(this.state.matrix))
-            );
-            this.addTileAI(move, 300);
-          }
+        if (this.checkStatus(this.state.matrix) && this.state.turn === "AI") {
+          const move = bestMove(JSON.parse(JSON.stringify(this.state.matrix)));
+          this.addTileAI(move, 300);
         }
       }
     );
